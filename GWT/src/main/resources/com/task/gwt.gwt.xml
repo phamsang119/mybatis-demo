@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to='gwt'>
+    <!-- Inherit the core Web Toolkit stuff.                        -->
+    <inherits name='com.google.gwt.user.User'/>
+    <inherits name="com.google.gwt.http.HTTP" />
+    <inherits name="org.fusesource.restygwt.RestyGWT"/>
+    <inherits name="com.github.gwtbootstrap.Bootstrap"/>
+    <inherits name="com.google.web.bindery.autobean.AutoBean"/>
+    <inherits name="com.github.gwtbootstrap.datepicker.Datepicker"/>
+
+    <!-- Inherit the default GWT style sheet.  You can change       -->
+    <!-- the theme of your GWT application by uncommenting          -->
+    <!-- any one of the following lines.                            -->
+    <inherits name='com.google.gwt.user.theme.standard.Standard'/>
+    <!-- <inherits name='com.gooApp.gwt.user.theme.chrome.Chrome'/> -->
+    <!-- <inherits name='com.gooApp.gwt.user.theme.dark.Dark'/>     -->
+
+    <!-- Other module inherits                                      -->
+
+    <!-- Specify the app entry point class.                         -->
+    <entry-point class='com.task.client.App'/>
+
+    <!-- Specify gwt validator -->
+    <inherits name="org.hibernate.validator.HibernateValidator"/>
+    <replace-with
+            class="com.google.gwt.sample.validation.client.SampleValidatorFactory">
+        <when-type-is class="javax.validation.ValidatorFactory"/>
+    </replace-with>
+
+    <inherits name="com.google.gwt.logging.Logging" />
+    <set-property name="gwt.logging.logLevel" value="SEVERE" />
+    <set-property name="gwt.logging.enabled" value="TRUE" />
+
+    <!-- Specify the paths for translatable code                    -->
+    <source path='client'/>
+    <source path="server"/>
+    <source path="service"/>
+
+</module>
