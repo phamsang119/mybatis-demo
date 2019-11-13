@@ -4,13 +4,15 @@ import java.util.List;
 
 
 public interface BookService {
-    List<Book> list();
+    List<Book> getAll();
 
-    Book save(Book book);
+    Book saveOne(Book book);
 
-//    void delete(Long id);
+    Book updateOne(Book book);
 
-    Book getBook(Long id);
+    void deleteOne(Long id);
+
+    Book getOne(Long id);
 
 
 }

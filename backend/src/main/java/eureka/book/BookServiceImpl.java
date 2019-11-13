@@ -13,24 +13,32 @@ public class BookServiceImpl implements BookService {
     private BookMapper bookMapper;
 
     @Override
-    public List<Book> list() {
-        return bookMapper.selectAll()   ;
+    public List<Book> getAll() {
+        return bookMapper.getBooks();
     }
 
     @Override
-    public Book save(Book book) {
+    public Book getOne(Long id) {
+        return bookMapper.getBookById(id);
+    }
+    @Override
+    public Book saveOne(Book book) {
+
         bookMapper.insertBook(book);
         return book;
     }
-//
-//    @Override
-//    public void delete(Long id) {
-//        this.bookRepository.deleteById(id);
-//    }
 
     @Override
-    public Book getBook(Long id) {
-        return bookMapper.selectOne(id);
+    public Book updateOne(Book book) {
+        bookMapper.updateBook(book);
+        return book;
     }
+
+    @Override
+    public void deleteOne(Long id) {
+        bookMapper.deleteBook(id);
+    }
+
+
 
 }
