@@ -1,5 +1,7 @@
-package eureka.book;
+package eureka.book.controller;
 
+import eureka.book.dto.Book;
+import eureka.book.service.BookService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,9 +34,9 @@ public class BookController {
      * @return an instance of {@link List<Book>}
      */
     @GetMapping()
-    public List<Book> getAll() {
-        System.out.println("Hello");
-        return bookService.getAll();
+    public List<Book> getAll(@RequestParam(defaultValue = "20") int limit, @RequestParam(defaultValue = "1") int page) {
+        System.out.println("Limit is " + limit);
+        return bookService.getAll(page, limit);
     }
 
     /**
@@ -43,27 +45,29 @@ public class BookController {
      * @param request the given book request
      * @return an instance of {@link Book}
      */
-    @RequestMapping(method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public Book create(@RequestBody Book request) {
         return bookService.saveOne(request);
     }
 
-    @RequestMapping(method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE,path = "/update")
+    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, path = "/update")
     public Book update(@RequestBody Book request) {
         return bookService.updateOne(request);
     }
+
     /**
      * Delete a book by id.
      *
      * @param id the given book id
-    //     */
+     *           //
+     */
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         bookService.deleteOne(id);
     }
 
     @GetMapping("/cheat")
-    public void cheatData(){
+    public void cheatData() {
         bookService.cheatData();
     }
 }
