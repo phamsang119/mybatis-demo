@@ -13,7 +13,7 @@ public interface BookMapper {
     @Select("SELECT * from books where id = #{id} ")
     Book getBookById(long id);
 
-    @Insert("INSERT INTO books (id, author, bookName,description,price,published_date) VALUES (#{id}, #{author}, #{bookName},#{description},#{price},#{publishedDate})")
+    @Insert("INSERT INTO books (id, author, bookName,description,price,published_date, category) VALUES (#{id}, #{author}, #{bookName},#{description},#{price},#{publishedDate},#{category})")
     // Sets the object id to the id generated in database
     @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
     int insertBook(Book book);

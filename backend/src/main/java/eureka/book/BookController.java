@@ -61,4 +61,9 @@ public class BookController {
     public void delete(@PathVariable Long id) {
         bookService.deleteOne(id);
     }
+
+    @GetMapping("/cheat")
+    public void cheatData(){
+        bookService.cheatData();
+    }
 }
