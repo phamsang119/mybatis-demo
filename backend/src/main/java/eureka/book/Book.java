@@ -1,49 +1,28 @@
 package eureka.book;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-@Entity(name = "books")
 public class Book implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    @Size(max = 50)
-    @Column(name = "bookName")
-    @JsonProperty("bookName")
     private String bookName;
 
-    @Size(max = 50)
-    @Column(name = "author")
     private String author;
 
-    @Column(name = "description")
     private String description;
 
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "dd-mm-yyyy")
-    @Column(name = "publishedDate")
-    @JsonProperty("publishedDate")
     private Date publishedDate = new Date();
 
-    @NotNull
-    @Column(name = "price")
     private double price;
 
-    public Book(@NotNull @Size(max = 50) String bookName,
-                @Size(max = 50) String author,
+    public Book(String bookName,
+                String author,
                 String description,
                 Date publishedDate,
-                @NotNull double price) {
+                double price) {
         this.bookName = bookName;
         this.author = author;
         this.description = description;
