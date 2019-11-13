@@ -1,7 +1,7 @@
-package eureka.book.service;
+package metanet.book.service;
 
-import eureka.book.dto.Book;
-import eureka.book.repository.BookRepository;
+import metanet.book.dto.Book;
+import metanet.book.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

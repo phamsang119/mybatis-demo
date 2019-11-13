@@ -1,6 +1,6 @@
-package eureka.book.service;
+package metanet.book.service;
 
-import eureka.book.dto.Book;
+import metanet.book.dto.Book;
 
 
 public interface BookService extends GeneralService<Long, Book> {

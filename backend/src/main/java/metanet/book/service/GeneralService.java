@@ -1,4 +1,4 @@
-package eureka.book.service;
+package metanet.book.service;
 
 import java.io.Serializable;
 import java.util.List;

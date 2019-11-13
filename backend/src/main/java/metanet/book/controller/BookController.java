@@ -1,7 +1,7 @@
-package eureka.book.controller;
+package metanet.book.controller;
 
-import eureka.book.dto.Book;
-import eureka.book.service.BookService;
+import metanet.book.dto.Book;
+import metanet.book.service.BookService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,6 +50,11 @@ public class BookController {
         return bookService.saveOne(request);
     }
 
+    /**
+     * Update a book by id
+     * @param request
+     * @return
+     */
     @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, path = "/update")
     public Book update(@RequestBody Book request) {
         return bookService.updateOne(request);
@@ -59,7 +64,7 @@ public class BookController {
      * Delete a book by id.
      *
      * @param id the given book id
-     *           //
+     *
      */
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
