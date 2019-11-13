@@ -1,0 +1,57 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'
+             xmlns:b="urn:import:com.github.gwtbootstrap.client.ui"
+             xmlns:date="urn:import:com.github.gwtbootstrap.datepicker.client.ui">
+    <g:HTMLPanel>
+
+        <b:Form type="HORIZONTAL">
+            <b:Fieldset ui:field="editBox">
+                <b:Legend>Add book</b:Legend>
+
+                <b:ControlGroup >
+                    <b:ControlLabel for="book name">Book name: </b:ControlLabel>
+                    <b:Controls>
+                        <b:TextBox ui:field="bookNameBox" placeholder="name of the book"/>
+                    </b:Controls>
+                </b:ControlGroup>
+
+                <b:ControlGroup>
+                    <b:ControlLabel for="date">Published Date: </b:ControlLabel>
+                    <b:Controls>
+                        <date:DateBoxAppended ui:field="pubDateBox" format="dd-mm-yyyy" autoClose="true"/>
+                    </b:Controls>
+                </b:ControlGroup>
+
+                <b:ControlGroup>
+                    <b:ControlLabel for="price">Price: </b:ControlLabel>
+                    <b:Controls>
+                        <b:DoubleBox ui:field="priceBox" placeholder="price"/>
+
+                    </b:Controls>
+                </b:ControlGroup>
+
+                <b:ControlGroup>
+                    <b:ControlLabel for="author">Author: </b:ControlLabel>
+                    <b:Controls>
+                        <b:TextBox ui:field="author" placeholder="author"/>
+                    </b:Controls>
+                </b:ControlGroup>
+
+                <b:ControlGroup>
+                    <b:ControlLabel for="Description">Description </b:ControlLabel>
+                    <b:Controls>
+                        <b:TextArea ui:field="descriptionArea" placeholder="some description"/>
+                    </b:Controls>
+                </b:ControlGroup>
+
+                <b:FormActions>
+                    <b:SubmitButton type="PRIMARY" ui:field="save">save</b:SubmitButton>
+                    <b:Button ui:field="cancel">cancel</b:Button>
+                </b:FormActions>
+            </b:Fieldset>
+        </b:Form>
+    </g:HTMLPanel>
+
+
+
+</ui:UiBinder>
