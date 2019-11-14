@@ -1,4 +1,4 @@
-package eureka.book;
+package metanet.book.dto;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -18,16 +18,19 @@ public class Book implements Serializable {
 
     private double price;
 
+    private String category;
+
     public Book(String bookName,
                 String author,
                 String description,
                 Date publishedDate,
-                double price) {
+                double price, String category) {
         this.bookName = bookName;
         this.author = author;
         this.description = description;
         this.publishedDate = publishedDate;
         this.price = price;
+        this.category = category;
     }
 
     public Book() {
@@ -99,5 +102,13 @@ public class Book implements Serializable {
                 ", publishedDate=" + publishedDate +
                 ", price=" + price +
                 '}';
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }
