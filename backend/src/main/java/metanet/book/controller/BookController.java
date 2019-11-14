@@ -50,6 +50,11 @@ public class BookController {
         return bookService.saveOne(request);
     }
 
+
+    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, path = "/list")
+    public void create(@RequestBody List<Book> books){
+        bookService.saveMany(books);
+    }
     /**
      * Update a book by id
      * @param request

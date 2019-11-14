@@ -5,11 +5,13 @@ import metanet.book.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
 @Service
+@Transactional
 public class BookServiceImpl implements BookService {
 
     @Autowired
@@ -20,6 +22,17 @@ public class BookServiceImpl implements BookService {
     public List<Book> getAll(int page, int limit) {
         int offset = (page-1)*limit;
         return bookRepository.getBooks(offset, limit);
+    }
+
+    @Override
+    public Book saveOne(Book object) {
+        bookRepository.insertBook(object);
+        return object;
+    }
+
+    @Override
+    public void saveMany(List<Book> object) {
+        bookRepository.insertBooks(object);
     }
 
     @Override
@@ -45,13 +58,6 @@ public class BookServiceImpl implements BookService {
             Book book = new Book(bookName, author, description, date, price, category);
             saveOne(book);
         }
-    }
-
-    @Override
-    public Book saveOne(Book book) {
-
-        bookRepository.insertBook(book);
-        return book;
     }
 
     @Override
