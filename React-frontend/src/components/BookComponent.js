@@ -1,6 +1,7 @@
 import React from 'react';
 import {bookService} from '../services/BookService';
 import {findDOMNode} from 'react-dom';
+import { FormControl, InputLabel, Input } from '@material-ui/core';
 
 import ReactDataGrid from 'react-data-grid';
 
@@ -56,13 +57,10 @@ class BookComponent extends React.Component {
             {key: 'category', name: 'category', editable: true}];
         return (
             <div style={{maxWidth: "90%", margin: "auto"}}>
-                <form onSubmit={this.handleSubmit} style={{marginBottom: "15px", marginTop: "30px"}}>
-                    <label>
-                        Name:
-                        <input type="text" value={this.state.value} onChange={this.handleChange}/>
-                    </label>
-                    <input type="submit" value="Submit"/>
-                </form>
+                <FormControl style={{marginBottom: "15px"}}>
+                    <InputLabel htmlFor="my-input">Email address</InputLabel>
+                    <Input id="my-input" aria-describedby="my-helper-text" />
+                </FormControl>
                 <ReactDataGrid
                     columns={columns}
                     rowGetter={i => this.state.localBooks[i]}
