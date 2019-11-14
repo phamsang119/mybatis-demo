@@ -8,9 +8,11 @@ public interface GeneralService<PK extends Serializable, T> {
 
     T saveOne(T object);
 
-    void saveMany(List<T> object);
+    void saveMany(List<T> list);
 
     T updateOne(T object);
+
+    void updateMany(List<T> list);
 
     void deleteOne(PK pk);
 

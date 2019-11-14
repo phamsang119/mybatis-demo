@@ -31,8 +31,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void saveMany(List<Book> object) {
-        bookRepository.insertBooks(object);
+    public void saveMany(List<Book> list) {
+        bookRepository.insertBooks(list);
     }
 
     @Override
@@ -64,6 +64,11 @@ public class BookServiceImpl implements BookService {
     public Book updateOne(Book book) {
         bookRepository.updateBook(book);
         return book;
+    }
+
+    @Override
+    public void updateMany(List<Book> list) {
+       bookRepository.updateBooks(list);
     }
 
     @Override

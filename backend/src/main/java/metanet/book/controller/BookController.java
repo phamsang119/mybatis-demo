@@ -2,14 +2,19 @@ package metanet.book.controller;
 
 import metanet.book.dto.Book;
 import metanet.book.service.BookService;
+import metanet.book.service.request.CreateBookRequest;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Produces;
 import java.util.List;
 
 @RestController
 @RequestMapping("/books")
 @CrossOrigin(origins = "*")
+@Produces(MediaType.APPLICATION_JSON_VALUE)
+@Consumes(MediaType.APPLICATION_JSON_VALUE)
 public class BookController {
     private final BookService bookService;
 
@@ -45,14 +50,19 @@ public class BookController {
      * @param request the given book request
      * @return an instance of {@link Book}
      */
-    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping()
     public Book create(@RequestBody Book request) {
         return bookService.saveOne(request);
     }
 
 
-    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, path = "/list")
-    public void create(@RequestBody List<Book> books){
+    /**
+     * Create multiple books
+     * @param request
+     */
+    @PostMapping(path = "/list")
+    public void create(@RequestBody CreateBookRequest request){
+        List<Book> books = request.getListBooks();
         bookService.saveMany(books);
     }
     /**
@@ -60,11 +70,20 @@ public class BookController {
      * @param request
      * @return
      */
-    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, path = "/update")
+    @PostMapping(path = "/update")
     public Book update(@RequestBody Book request) {
         return bookService.updateOne(request);
     }
 
+    /**
+     * Update multiple books
+     * @param request
+     */
+    @PostMapping(path = "/updateList")
+    public void update(@RequestBody CreateBookRequest request) {
+        List<Book> books = request.getListBooks();
+        bookService.updateMany(books);
+    }
     /**
      * Delete a book by id.
      *
@@ -76,6 +95,9 @@ public class BookController {
         bookService.deleteOne(id);
     }
 
+    /**
+     * Add data
+     */
     @GetMapping("/cheat")
     public void cheatData() {
         bookService.cheatData();

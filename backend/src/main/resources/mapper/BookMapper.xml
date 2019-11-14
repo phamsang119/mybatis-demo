@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="metanet.book.repository.BookRepository">
+
+    <resultMap id="result" type="book">
+        <result property="id" column="id"/>
+        <result property="author" column="author"/>
+        <result property="bookName" column="bookName"/>
+        <result property="description" column="description"/>
+        <result property="price" column="price"/>
+        <result property="publishedDate" column="published_date"/>
+        <result property="category" column="category"/>
+    </resultMap>
+
+    <!--    <select id="getBooks" parameterType="map" resultMap="result">-->
+    <!--        SELECT *-->
+    <!--        FROM books-->
+    <!--        LIMIT #{offset},#{limit};-->
+    <!--    </select>-->
+    <!--    <select id="getBookById" parameterType="long" resultMap="result">-->
+    <!--        SELECT *-->
+    <!--        FROM books-->
+    <!--        WHERE id = #{id}-->
+    <!--    </select>-->
+    <!--    <insert id="insertBook" parameterType="book" useGeneratedKeys="true" keyColumn="id" keyProperty="id">-->
+    <!--        INSERT INTO books (id, author, bookName,description,price,published_date, category)-->
+    <!--        VALUES (#{id}, #{author}, #{bookName},#{description},#{price},#{publishedDate},#{category})-->
+
+    <!--    </insert>-->
+
+    <insert id="insertBooks" parameterType="java.util.List">
+        INSERT INTO books (id, author, bookName,description,price,published_date,category)
+        values
+        <foreach collection="list" item="book" index="index" separator=",">
+
+            (#{book.id}, #{book.author},
+            #{book.bookName},#{book.description},#{book.price},#{book.publishedDate},#{book.category})
+        </foreach>
+
+    </insert>
+    <!--    <update id="updateBook" parameterType="book">-->
+    <!--        UPDATE books-->
+    <!--        SET author=#{author},bookName=#{bookName}, description=#{description}, price=#{price}, published_date=#{publishedDate}, category=#{category}-->
+    <!--        WHERE id=#{id}-->
+    <!--    </update>-->
+
+    <!--    <update id="updateBooks" parameterType="java.util.List">-->
+    <!--        <foreach collection="list" item="book" index="index" separator=";">-->
+    <!--            UPDATE  books-->
+    <!--            SET author=#{book.author},bookName=#{book.bookName}, description=#{book.description}, price=#{book.price}, published_date=#{book.publishedDate}, category=#{book.category}-->
+    <!--            WHERE id=#{book.id}-->
+    <!--        </foreach>-->
+
+    <!--    </update>-->
+    <!--    <delete id="deleteBook" parameterType="long">-->
+    <!--        DELETE FROM books where id=#{id}-->
+    <!--    </delete>-->
+</mapper>
