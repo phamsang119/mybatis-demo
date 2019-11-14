@@ -25,6 +25,17 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public Book saveOne(Book object) {
+        bookRepository.insertBook(object);
+        return object;
+    }
+
+    @Override
+    public void saveMany(List<Book> object) {
+        bookRepository.insertBooks(object);
+    }
+
+    @Override
     public Book getOne(Long id) {
         return bookRepository.getBookById(id);
     }
@@ -47,13 +58,6 @@ public class BookServiceImpl implements BookService {
             Book book = new Book(bookName, author, description, date, price, category);
             saveOne(book);
         }
-    }
-
-    @Override
-    public Book saveOne(Book book) {
-
-        bookRepository.insertBook(book);
-        return book;
     }
 
     @Override

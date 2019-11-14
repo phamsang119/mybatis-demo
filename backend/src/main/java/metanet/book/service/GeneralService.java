@@ -6,9 +6,11 @@ import java.util.List;
 public interface GeneralService<PK extends Serializable, T> {
     List<T> getAll(int page, int limit);
 
-    T saveOne(T book);
+    T saveOne(T object);
 
-    T updateOne(T book);
+    void saveMany(List<T> object);
+
+    T updateOne(T object);
 
     void deleteOne(PK pk);
 
