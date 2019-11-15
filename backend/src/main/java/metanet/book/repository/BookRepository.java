@@ -17,29 +17,35 @@ public interface BookRepository {
     Book getBookById(long id);
 
     @Insert("INSERT INTO books (id, author, bookName,description,price,published_date, category) VALUES (#{id}, #{author}, #{bookName},#{description},#{price},#{publishedDate},#{category})")
-     //Sets the object id to the id generated in database
+    //Sets the object id to the id generated in database
     @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
     int insertBook(Book book);
 
-//    @Insert({"<script>",
+    //    @Insert({"<script>",
 //            "insert into  books (id, author, bookName,description,price,published_date, category) values ",
 //            "<foreach collection='list' item='book' index='index' open='(' separator = '),(' close=')' >#{book.id},#{book.author},#{book.bookName},#{book.description},#{book.price},#{book.publishedDate},#{book.category}</foreach>",
 //            "</script>"})
     int insertBooks(@Param("list") List<Book> books);
 
-   @Update("UPDATE books SET author=#{author},bookName=#{bookName}, description=#{description}, price=#{price}, published_date=#{publishedDate}, category=#{category} where id=#{id}")
+    @Update("UPDATE books SET author=#{author},bookName=#{bookName}, description=#{description}, price=#{price}, published_date=#{publishedDate}, category=#{category} where id=#{id}")
     int updateBook(Book book);
 
     @Insert({"<script>",
             "<foreach collection='list' item='book' index='index'  separator=';' >",
             "UPDATE  books SET ",
-           "author=#{book.author},bookName=#{book.bookName}, description=#{book.description}, price=#{book.price}, published_date=#{book.publishedDate}, category=#{book.category} WHERE id=#{book.id}</foreach>",
+            "author=#{book.author},bookName=#{book.bookName}, description=#{book.description}, price=#{book.price}, published_date=#{book.publishedDate}, category=#{book.category} WHERE id=#{book.id}</foreach>",
             "</script>"})
-   int updateBooks(@Param("list") List<Book> books);
+    int updateBooks(@Param("list") List<Book> books);
 
-   @Update("DELETE FROM books where id=#{id}")
+    @Delete("DELETE FROM books where id=#{id}")
     void deleteBook(long id);
 
-   @Select("SELECT COUNT(*) from books ")
-   long count();
+    @Delete({
+            "<script>DELETE FROM books WHERE id IN ( " +
+                    "<foreach collection='list' item='id' index='index' separator=','>#{id}</foreach>)</script>"
+    })
+    void deleteBooks(List list);
+
+    @Select("SELECT COUNT(*) from books ")
+    long count();
 }

@@ -20,7 +20,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> getAll(int page, int limit) {
-        int offset = (page-1)*limit;
+        int offset = (page - 1) * limit;
         return bookRepository.getBooks(offset, limit);
     }
 
@@ -56,7 +56,7 @@ public class BookServiceImpl implements BookService {
             String bookName = "Book " + i;
             String author = "Author " + i;
             String description = "No description";
-            int price =  (int)(Math.random() * ((1000 - 10) + 1)) + 10;
+            int price = (int) (Math.random() * ((1000 - 10) + 1)) + 10;
             int rnd = new Random().nextInt(categoryList.length);
             String category = categoryList[rnd];
             Date date = new Date();
@@ -73,12 +73,17 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void updateMany(List<Book> list) {
-       bookRepository.updateBooks(list);
+        bookRepository.updateBooks(list);
     }
 
     @Override
     public void deleteOne(Long id) {
         bookRepository.deleteBook(id);
+    }
+
+    @Override
+    public void deleteMany(List listId) {
+        bookRepository.deleteBooks(listId);
     }
 
 

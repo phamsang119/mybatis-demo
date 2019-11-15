@@ -1,5 +1,6 @@
 package metanet.book.controller;
 
+import metanet.book.controller.request.DeleteBookRequest;
 import metanet.book.controller.response.SelectBookResponse;
 import metanet.book.dto.Book;
 import metanet.book.service.BookService;
@@ -59,15 +60,18 @@ public class BookController {
 
     /**
      * Create multiple books
+     *
      * @param request
      */
     @PostMapping(path = "/list")
-    public void create(@RequestBody CreateBookRequest request){
+    public void create(@RequestBody CreateBookRequest request) {
         List<Book> books = request.getListBooks();
         bookService.saveMany(books);
     }
+
     /**
      * Update a book by id
+     *
      * @param request
      * @return
      */
@@ -78,6 +82,7 @@ public class BookController {
 
     /**
      * Update multiple books
+     *
      * @param request
      */
     @PostMapping(path = "/updateList")
@@ -85,15 +90,21 @@ public class BookController {
         List<Book> books = request.getListBooks();
         bookService.updateMany(books);
     }
+
     /**
      * Delete a book by id.
      *
      * @param id the given book id
-     *
      */
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         bookService.deleteOne(id);
+    }
+
+    @DeleteMapping
+    public void delete(@RequestBody DeleteBookRequest request) {
+        bookService.deleteMany(request.getListId());
+
     }
 
     /**
