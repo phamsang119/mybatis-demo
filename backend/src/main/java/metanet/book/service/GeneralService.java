@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 
 public interface GeneralService<PK extends Serializable, T> {
+    T getOne(PK pk);
+
     List<T> getAll(int page, int limit);
 
     T saveOne(T object);
@@ -17,8 +19,6 @@ public interface GeneralService<PK extends Serializable, T> {
     void deleteOne(PK pk);
 
     void deleteMany(List<PK> listId);
-
-    T getOne(PK pk);
 
     long count();
 }
