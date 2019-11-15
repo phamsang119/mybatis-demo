@@ -9,7 +9,7 @@ import ReactDataGrid from 'react-data-grid';
 class BookComponent extends React.Component {
     constructor(props) {
         super(props);
-        this.canvas = null;
+        this.bookTableDom = null;
     }
 
     state = {
@@ -24,8 +24,8 @@ class BookComponent extends React.Component {
         bookService.get("books", {page: this.state.offSet, limit: this.state.limit}).then((result) => {
             this.setState({books: result.data, localBooks: result.data});
         });
-        this.canvas = findDOMNode(this).querySelector('.react-grid-Canvas');
-        this.canvas.addEventListener('scroll', this.scrollListener);
+        this.bookTableDom = findDOMNode(this).querySelector('.react-grid-Canvas');
+        this.bookTableDom.addEventListener('scroll', this.scrollListener);
     };
 
     onGridRowsUpdated = ({fromRow, toRow, updated}) => {
@@ -40,7 +40,7 @@ class BookComponent extends React.Component {
 
     scrollListener = () => {
         if (
-            this.canvas.scrollHeight === (this.canvas.scrollTop + this.canvas.clientHeight)) {
+            this.bookTableDom.scrollHeight === (this.bookTableDom.scrollTop + this.bookTableDom.clientHeight)) {
             bookService.get("books", {page: this.state.offSet+1, limit: this.state.limit}).then((result) => {
                 this.setState({books: [...this.state.books, ...result.data], localBooks: [...this.state.books, ...result.data], offSet: this.state.offSet+1});
             })
