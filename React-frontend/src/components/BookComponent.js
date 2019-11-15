@@ -4,6 +4,7 @@ import {findDOMNode} from 'react-dom';
 import {FormControl, InputLabel, Input, Button} from '@material-ui/core';
 import  { Editors }  from 'react-data-grid-addons';
 import ReactDataGrid from 'react-data-grid';
+import { element } from 'prop-types';
 
 
 class BookComponent extends React.Component {
@@ -15,7 +16,9 @@ class BookComponent extends React.Component {
             localBooks: [],
             offSet: 1,
             limit: 20,
-            total: 0
+            total: 0,
+            selectedIndexes: [],
+            selectedIds: []
         };
     }
     componentDidMount() {
@@ -26,7 +29,31 @@ class BookComponent extends React.Component {
         this.bookTableDom.addEventListener('scroll', this.scrollListener);
     };
 
-    onGridRowsUpdated = ({fromRow, toRow, updated}) => {
+    rowGetter = i => {
+        return this.state.localBooks[i];
+    };
+
+    onRowsSelected = rows => {
+        this.setState({
+            selectedIndexes: this.state.selectedIndexes.concat(
+                rows.map(r => r.rowIdx)
+            ),
+            selectedIds: this.state.selectedIds.concat(
+                rows.map(r => r.row.id)
+            )
+        });
+    };
+
+    onRowsDeselected = rows => {
+        let rowIndexes = rows.map(r => r.rowIdx);
+        this.setState({
+            selectedIndexes: this.state.selectedIndexes.filter(
+                i => rowIndexes.indexOf(i) === -1
+            )
+        });
+    };
+
+    onGridRowsUpdated = ({ fromRow, toRow, updated }) => {
         this.setState(state => {
             const rows = state.localBooks.slice();
             for (let i = fromRow; i <= toRow; i++) {
@@ -46,6 +73,19 @@ class BookComponent extends React.Component {
         books.push(book);
         this.setState({editedBooks: books})
     };
+
+    onRowDelete = () => {
+        bookService.deleteByIds("books", {listId: this.state.selectedIds}).then(() => {
+            bookService.get("books", { page: this.state.offSet + 1, limit: this.state.limit }).then((result) => {
+                this.setState({
+                    localBooks: result.data.books,
+                    selectedIndexes: [],
+                    selectedIds: [],
+                    offSet: 0
+                });
+            });
+        })
+    }
 
     scrollListener = () => {
         if (
@@ -117,13 +157,13 @@ class BookComponent extends React.Component {
                     <Button variant="outlined" onClick={this.saveBook} style={{marginRight: "5px"}}>
                         Save
                     </Button>
-                    <Button variant="outlined">
+                    <Button variant="outlined" onClick={this.onRowDelete}>
                         Delete
                     </Button>
                 </div>
                 <ReactDataGrid
                     columns={columns}
-                    rowGetter={i => this.state.localBooks[i]}
+                    rowGetter={this.rowGetter}
                     rowsCount={this.state.localBooks.length}
                     enableCellSelect={true}
                     onGridRowsUpdated={this.onGridRowsUpdated}
@@ -131,6 +171,16 @@ class BookComponent extends React.Component {
                     onGridSort={(sortColumn, sortDirection) =>
                         this.sortRows(this.state.localBooks, sortColumn, sortDirection)
                     }
+                    rowSelection={{
+                        showCheckbox: true,
+                        enableShiftSelect: true,
+                        onRowsSelected: this.onRowsSelected,
+                        onRowsDeselected: this.onRowsDeselected,
+                        selectBy: {
+                            indexes: this.state.selectedIndexes
+                        }
+                    }}
+                    minHeight={600}
                 />
                 <div  style={{float: "right",  marginBottom: "15px"}}>
                     Showing {this.state.localBooks.length} of {this.state.total} item

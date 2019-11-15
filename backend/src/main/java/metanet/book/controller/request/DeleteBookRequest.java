@@ -3,7 +3,7 @@ package metanet.book.controller.request;
 import java.util.List;
 
 public class DeleteBookRequest {
-    private List listId;
+    private List<Long> listId;
 
     public DeleteBookRequest() {
 
@@ -13,7 +13,7 @@ public class DeleteBookRequest {
         return listId;
     }
 
-    public void setListId(List listId) {
+    public void setListId(List<Long> listId) {
         this.listId = listId;
     }
 }
