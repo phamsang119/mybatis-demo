@@ -57,7 +57,15 @@
     <!--        DELETE FROM books where id=#{id}-->
     <!--    </delete>-->
 
-<!--    <select id="count" resultType="long">-->
-<!--        SELECT COUNT(*) FROM books-->
-<!--    </select>-->
+    <!--    <select id="count" resultType="long">-->
+    <!--        SELECT COUNT(*) FROM books-->
+    <!--    </select>-->
+
+    <!--    <delete id="deleteBooks">-->
+    <!--        DELETE FROM books WHERE id IN (-->
+    <!--        <foreach collection="list" separator="," item="id">-->
+    <!--            #{id}-->
+    <!--        </foreach>-->
+    <!--        )-->
+    <!--    </delete>-->
 </mapper>
