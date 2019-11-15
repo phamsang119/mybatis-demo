@@ -10,15 +10,14 @@ class BookComponent extends React.Component {
     constructor(props) {
         super(props);
         this.bookTableDom = null;
+        this.state = {
+            books: [],
+            localBooks: [],
+            offSet: 1,
+            limit: 20,
+
+        };
     }
-
-    state = {
-        books: [],
-        localBooks: [],
-        offSet: 1,
-        limit: 20,
-
-    };
 
     componentDidMount() {
         bookService.get("books", {page: this.state.offSet, limit: this.state.limit}).then((result) => {
