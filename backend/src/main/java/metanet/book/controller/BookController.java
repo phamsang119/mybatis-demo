@@ -1,8 +1,9 @@
 package metanet.book.controller;
 
+import metanet.book.controller.response.SelectBookResponse;
 import metanet.book.dto.Book;
 import metanet.book.service.BookService;
-import metanet.book.service.request.CreateBookRequest;
+import metanet.book.controller.request.CreateBookRequest;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,9 +40,9 @@ public class BookController {
      * @return an instance of {@link List<Book>}
      */
     @GetMapping()
-    public List<Book> getAll(@RequestParam(defaultValue = "20") int limit, @RequestParam(defaultValue = "1") int page) {
-        System.out.println("Limit is " + limit);
-        return bookService.getAll(page, limit);
+    public SelectBookResponse getAll(@RequestParam(defaultValue = "20") int limit, @RequestParam(defaultValue = "1") int page) {
+        long count = bookService.count();
+        return new SelectBookResponse(count, bookService.getAll(page, limit));
     }
 
     /**

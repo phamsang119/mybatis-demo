@@ -17,4 +17,6 @@ public interface GeneralService<PK extends Serializable, T> {
     void deleteOne(PK pk);
 
     T getOne(PK pk);
+
+    long count();
 }

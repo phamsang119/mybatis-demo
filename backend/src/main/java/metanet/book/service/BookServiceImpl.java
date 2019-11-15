@@ -40,6 +40,11 @@ public class BookServiceImpl implements BookService {
         return bookRepository.getBookById(id);
     }
 
+    @Override
+    public long count() {
+        return bookRepository.count();
+    }
+
     /**
      * Purpose for generate data
      */

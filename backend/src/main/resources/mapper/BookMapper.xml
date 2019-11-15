@@ -56,4 +56,8 @@
     <!--    <delete id="deleteBook" parameterType="long">-->
     <!--        DELETE FROM books where id=#{id}-->
     <!--    </delete>-->
+
+<!--    <select id="count" resultType="long">-->
+<!--        SELECT COUNT(*) FROM books-->
+<!--    </select>-->
 </mapper>

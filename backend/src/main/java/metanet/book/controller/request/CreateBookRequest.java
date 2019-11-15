@@ -1,4 +1,4 @@
-package metanet.book.service.request;
+package metanet.book.controller.request;
 
 import metanet.book.dto.Book;
 

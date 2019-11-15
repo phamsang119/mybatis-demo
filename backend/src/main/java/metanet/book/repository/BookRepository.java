@@ -39,4 +39,7 @@ public interface BookRepository {
 
    @Update("DELETE FROM books where id=#{id}")
     void deleteBook(long id);
+
+   @Select("SELECT COUNT(*) from books ")
+   long count();
 }
