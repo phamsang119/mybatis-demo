@@ -29,16 +29,16 @@
 
     <!--    </insert>-->
 
-    <insert id="insertBooks" parameterType="java.util.List">
-        INSERT INTO books (id, author, bookName,description,price,published_date,category)
-        values
-        <foreach collection="list" item="book" index="index" separator=",">
+<!--    <insert id="insertBooks" parameterType="java.util.List">-->
+<!--        INSERT INTO books (id, author, bookName,description,price,published_date,category)-->
+<!--        values-->
+<!--        <foreach collection="list" item="book" index="index" separator=",">-->
 
-            (#{book.id}, #{book.author},
-            #{book.bookName},#{book.description},#{book.price},#{book.publishedDate},#{book.category})
-        </foreach>
+<!--            (#{book.id}, #{book.author},-->
+<!--            #{book.bookName},#{book.description},#{book.price},#{book.publishedDate},#{book.category})-->
+<!--        </foreach>-->
 
-    </insert>
+<!--    </insert>-->
     <!--    <update id="updateBook" parameterType="book">-->
     <!--        UPDATE books-->
     <!--        SET author=#{author},bookName=#{bookName}, description=#{description}, price=#{price}, published_date=#{publishedDate}, category=#{category}-->
