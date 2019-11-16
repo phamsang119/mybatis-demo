@@ -1,7 +1,7 @@
 import React from "react";
 import { bookService } from "../services/BookService";
 import { findDOMNode } from "react-dom";
-import { FormControl, InputLabel, Input, Button } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import { Editors } from "react-data-grid-addons";
 import ReactDataGrid from "react-data-grid";
 
@@ -11,7 +11,7 @@ class BookComponent extends React.Component {
     this.bookTableDom = null;
     this.state = {
       editedBooks: [],
-      localBooks: [],
+      books: [],
       offSet: 1,
       limit: 20,
       total: 0,
@@ -24,7 +24,7 @@ class BookComponent extends React.Component {
       .get("books", { page: this.state.offSet, limit: this.state.limit })
       .then(result => {
         this.setState({
-          localBooks: result.data.books,
+          books: result.data.books,
           total: result.data.count
         });
       });
@@ -33,7 +33,7 @@ class BookComponent extends React.Component {
   }
 
   rowGetter = i => {
-    return this.state.localBooks[i];
+    return this.state.books[i];
   };
 
   onRowsSelected = rows => {
@@ -55,20 +55,16 @@ class BookComponent extends React.Component {
   };
 
   onGridRowsUpdated = ({ fromRow, toRow, updated }) => {
-    const rows = this.state.localBooks.slice();
+    const rows = this.state.books.slice();
     for (let i = fromRow; i <= toRow; i++) {
       rows[i] = { ...rows[i], ...updated };
       this.updateEditedBook(rows[i]);
     }
-    this.setState({ localBooks: rows });
+    this.setState({ books: rows });
   };
 
   updateEditedBook = book => {
-    let books = this.state.editedBooks.slice();
-    const oldBook = books.filter(b => b.id === book.id);
-    if (oldBook.length > 0) {
-      books = books.filter(b => b.id !== oldBook[0].id);
-    }
+    let books = this.state.editedBooks.filter(b => b.id !== book.id);
     books.push(book);
     this.setState({ editedBooks: books });
   };
@@ -76,20 +72,16 @@ class BookComponent extends React.Component {
   onRowDelete = () => {
     bookService
       .deleteByIds("books", { listId: this.state.selectedIds })
-      .then(() => {
-        bookService
-          .get("books", {
-            page: this.state.offSet + 1,
-            limit: this.state.limit
-          })
-          .then(result => {
-            this.setState({
-              localBooks: result.data.books,
-              selectedIndexes: [],
-              selectedIds: [],
-              offSet: 0
-            });
+      .then(result => {
+        if (result && result.status === 200) {
+          this.setState({
+            books: this.state.books.filter(
+              b => this.state.selectedIds.indexOf(b.id) === -1
+            ),
+            selectedIds: [],
+            selectedIndexes: []
           });
+        }
       });
   };
 
@@ -102,7 +94,7 @@ class BookComponent extends React.Component {
         .get("books", { page: this.state.offSet + 1, limit: this.state.limit })
         .then(result => {
           this.setState({
-            localBooks: [...this.state.localBooks, ...result.data.books],
+            books: [...this.state.books, ...result.data.books],
             offSet: this.state.offSet + 1,
             total: result.data.count
           });
@@ -133,8 +125,8 @@ class BookComponent extends React.Component {
       }
     };
     if (sortDirection !== "NONE") {
-      const books = this.state.localBooks.slice();
-      this.setState({ localBooks: books.sort(comparer) });
+      const books = this.state.books.slice();
+      this.setState({ books: books.sort(comparer) });
     }
   };
 
@@ -170,17 +162,8 @@ class BookComponent extends React.Component {
     return (
       <div style={{ maxWidth: "90%", margin: "auto" }}>
         <div
-          className="searchForm"
-          style={{ float: "left", marginBottom: "15px" }}
-        >
-          <FormControl>
-            <InputLabel htmlFor="my-input">Email address</InputLabel>
-            <Input id="my-input" aria-describedby="my-helper-text" />
-          </FormControl>
-        </div>
-        <div
           className="tableButton"
-          style={{ float: "right", marginTop: "15px" }}
+          style={{ float: "right", margin: " 15px 0 15px 0" }}
         >
           <Button
             variant="outlined"
@@ -196,12 +179,12 @@ class BookComponent extends React.Component {
         <ReactDataGrid
           columns={columns}
           rowGetter={this.rowGetter}
-          rowsCount={this.state.localBooks.length}
+          rowsCount={this.state.books.length}
           enableCellSelect={true}
           onGridRowsUpdated={this.onGridRowsUpdated}
           minHeight={500}
           onGridSort={(sortColumn, sortDirection) =>
-            this.sortRows(this.state.localBooks, sortColumn, sortDirection)
+            this.sortRows(this.state.books, sortColumn, sortDirection)
           }
           rowSelection={{
             showCheckbox: true,
@@ -214,7 +197,7 @@ class BookComponent extends React.Component {
           }}
         />
         <div style={{ float: "right", marginBottom: "15px" }}>
-          Showing {this.state.localBooks.length} of {this.state.total} item
+          Showing {this.state.books.length} of {this.state.total} item
         </div>
       </div>
     );
