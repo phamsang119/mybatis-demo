@@ -13,7 +13,7 @@ export const bookService = {
 function get(apiEndpoint, params) {
     return axios.get(config.baseUrl + apiEndpoint, { params: params })
         .then((response) => {
-            return response;
+            return response.data;
         })
         .catch((err) => {
             console.log("Error in response");

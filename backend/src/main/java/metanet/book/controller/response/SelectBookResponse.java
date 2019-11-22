@@ -5,21 +5,21 @@ import metanet.book.dto.Book;
 import java.util.List;
 
 public class SelectBookResponse {
-    private long count;
+    private Paging paging;
     private List<Book> books;
 
-    public SelectBookResponse(long count, List<Book> books) {
+    public SelectBookResponse(Paging paging, List<Book> books) {
 
-        this.count = count;
+        this.paging = paging;
         this.books = books;
     }
 
-    public long getCount() {
-        return count;
+    public Paging getPaging() {
+        return paging;
     }
 
-    public void setCount(long count) {
-        this.count = count;
+    public void setPaging(Paging paging) {
+        this.paging = paging;
     }
 
     public List<Book> getBooks() {

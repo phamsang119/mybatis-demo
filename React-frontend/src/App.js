@@ -1,11 +1,14 @@
-import React from 'react';
-import './App.css';
-import BookComponent from "./components/BookComponent";
-
+import React from "react";
+import { Provider } from "react-redux";
+import "./App.css";
+import BookComponent from "./containers/BookContainer";
+import storeConfig from "./store/storeConfig";
 
 function App() {
   return (
-        <BookComponent />
+    <Provider store={storeConfig}>
+      <BookComponent />
+    </Provider>
   );
 }
 

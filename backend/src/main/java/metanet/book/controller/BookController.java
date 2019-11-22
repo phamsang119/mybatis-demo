@@ -1,6 +1,7 @@
 package metanet.book.controller;
 
 import metanet.book.controller.request.DeleteBookRequest;
+import metanet.book.controller.response.Paging;
 import metanet.book.controller.response.SelectBookResponse;
 import metanet.book.dto.Book;
 import metanet.book.service.BookService;
@@ -43,7 +44,7 @@ public class BookController {
     @GetMapping()
     public SelectBookResponse getAll(@RequestParam(defaultValue = "20") int limit, @RequestParam(defaultValue = "1") int page) {
         long count = bookService.count();
-        return new SelectBookResponse(count, bookService.getAll(page, limit));
+        return new SelectBookResponse(new Paging(page, limit, count), bookService.getAll(page, limit));
     }
 
     /**
